@@ -73,4 +73,4 @@ while(1):
     water_sensors.update_sensors()
     resp = client.publish(topic, water_sensors.get_json_read())
     print("Data sended")    
-    time.sleep(1)
+    time.sleep(5)
