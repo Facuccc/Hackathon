@@ -47,20 +47,6 @@ class Cow():
     def get_color(self):
         return self.color
 
-
-def generate_latitude(lat_start, lat_end):
-    return generate_ramdom(lat_start, lat_end)
-
-def generate_longitude(long_start, long_end):
-    return generate_ramdom(long_start, long_end)
-
-def generate_ramdom(val_start, val_end):
-    secure_random = random.SystemRandom()
-    return secure_random.uniform(val_start, val_end)
-
-def convert_string_to_json(string_to_convert):
-    return (json.dumps(string_to_convert))
-
 def connect_mqtt():
     def on_connect(client, userdata, flags, rc):
         if rc == 0:
@@ -73,11 +59,6 @@ def connect_mqtt():
     client.on_connect = on_connect
     client.connect(broker, port)
     return client
-
-def publish(client, send_msg):
-    time.sleep(1)
-    msg = convert_string_to_json(send_msg)
-    result = client.publish(topic, msg)
 
 # Variables
 
@@ -102,10 +83,6 @@ password = 'jLnS7Fw422UcdC'
 client = connect_mqtt()
 # Funciones
 while (1):
-    # lat_now = generate_latitude(lat_start, lat_end)
-    # long_now = generate_longitude(long_start, long_end)
-
-
     cow1.update_longitude()
     cow1.update_latitude()
 
@@ -121,5 +98,4 @@ while (1):
     result = client.publish(topic=topic, payload=json.dumps(send_msg))
 
     print(send_msg)
-    # publish(client, json.dumps(send_msg))
-    time.sleep(1)
+    time.sleep(3)
