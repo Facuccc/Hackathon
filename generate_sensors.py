@@ -7,13 +7,24 @@ class Sensors():
     def __init__(self, input_base, output_base):
         self.input_data = input_base
         self.output_data = output_base
+
+        now = int((time.time())*1000)
+
+        self.input_data['ts'] = now
+        self.output_data['ts'] = now
     
     def update_sensors(self):
         rand_choices = [-1, 1]
 
+        now = int((time.time())*1000)
+
+        self.input_data['ts'] = now
+        self.output_data['ts'] = now
+
         for param in self.input_data.keys():
-            self.input_data[param] = round(self.input_data[param] + self.input_data[param]*0.02*random.choice(rand_choices), 2)
-            self.output_data[param] = round(self.output_data[param] + self.output_data[param]*0.02*random.choice(rand_choices), 2)
+            if param != 'ts':
+                self.input_data[param] = round(self.input_data[param] + self.input_data[param]*0.02*random.choice(rand_choices), 2)
+                self.output_data[param] = round(self.output_data[param] + self.output_data[param]*0.02*random.choice(rand_choices), 2)
 
         print(self.output_data)
 
@@ -42,19 +53,17 @@ def connect_mqtt():
     return client
 
 input_sensor_params = {
-    'ortofosfato': 20,
-    'nitrato': 50,
-    'nitrito': 13,
     'ph': 7,
-    'temperatura': 25
+    'temperatura': 22,
+    'fosforo': 0.4,
+    'nitrogeno': 1
 }
 
 output_sensor_params = {
-    'ortofosfato': 21,
-    'nitrato': 56,
-    'nitrito': 10,
     'ph': 7,
-    'temperatura': 25
+    'temperatura': 23,
+    'fosforo': 0.3,
+    'nitrogeno': 1.5
 }
 
 water_sensors = Sensors(input_sensor_params, output_sensor_params)
